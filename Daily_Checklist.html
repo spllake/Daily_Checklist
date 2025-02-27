@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        
+            font-size: 16px; /* Increased by 2pts */
+        }
+        .section-title {
+            font-weight: bold;
+            margin-top: 15px;
+        
+            font-size: 18px; /* Increased by 2pts */
+        }
+        .task {
+            display: block;
+            margin-bottom: 5px;
+        
+            font-size: 16px; /* Increased by 2pts */
+        }
+        textarea {
+            width: 100%;
+            height: 60px;
+        
+            font-size: 16px; /* Increased by 2pts */
+        }
+        input[type="text"], input[type="time"] {
+            width: 100%;
+        
+            font-size: 16px; /* Increased by 2pts */
+        }
+        .submit-button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        
+            font-size: 16px; /* Increased by 2pts */
+        }
+    </style>
+</head>
+<body>
+    <h1>Daily Checklist</h1>
+    
+    <form id="checklistForm">
+        <label>Start Date & Time:</label>
+        <input type="datetime-local" id="startDateTime">
+        
+        <div class="section-title">Forklift Charge 2 Days or 2 Batches</div>
+        <label class="task"><input type="checkbox" name="toyota"> Toyota &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="hyster"> Hyster</label>
+        
+        <br>
+        <label class="task"><input type="checkbox" name="storeFreezer"> Check Store Freezers</label>
+          
+        <div class="section-title">Grinding Room</div>
+        <label class="task">Temperature #1: <input type="number" maxlength="4" size="1" name="temp-1" step="0.1" required> °C</label>
+        <label class="task">Temperature #2: <input type="number" maxlength="4" size="1" name="temp-2" step="0.1" required> °C</label>
+        <label class="task"><input type="checkbox" name="grindingLightsOff"> Lights Off &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="grindingLockDoors"> Lock Doors</label>
+        <div class="section-title">Behind Grinding Room</div>
+        <label class="task"><input type="checkbox" name="compressor1"> Compressor #1 ON</label>
+        <label class="task"><input type="checkbox" name="compressor2"> Compressor #2 ON</label>
+            
+        <div class="section-title">Utility Room #1</div>
+        <label class="task">Water Pressure: <input type="number" maxlength="4" size="1" name="waterPressure"> PSI</label>
+        <label class="task"><input type="checkbox" name="compressor3"> Compressor #3 On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temperature: <input type="number" maxlength="4" size="1" name="temp3"> °C</label>
+        <label class="task"><input type="checkbox" name="compressor4"> Compressor #4 On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temperature: <input type="number" maxlength="4" size="1" name="temp4"> °C</label>
+          
+        <label class="task"><input type="checkbox" name="utilityLightsOff"> Lights Off &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="utilityLockDoor"> Lock Door</label>
+      
+        <div class="section-title">Utility Room #2</div>
+        <label class="task"><input type="checkbox" name="drivewayDoorLocked"> Driveway Door Locked</label>
+        <label class="task"><input type="checkbox" name="middleDoorClosed"> Middle Door Closed below 5°C</label>
+        <label class="task"><input type="checkbox" name="backDoorLocked"> Back Door Locked</label>
+        
+        <div class="section-title">Utility Room #3</div>
+        <label class="task"><input type="checkbox" name="compressor5"> Compressor #5 On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temperature: <input type="number" maxlength="4" size="1" name="temp5"> °C</label>
+        <label class="task"><input type="checkbox" name="compressor6"> Compressor #6 On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temperature: <input type="number" maxlength="4" size="1" name="temp6"> °C</label>
+        <label class="task"><input type="checkbox" name="compressor7"> Compressor #7 On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Temperature: <input type="number" maxlength="4" size="1" name="temp7"> °C</label>
+            
+        <label class="task"><input type="checkbox" name="ventFanOn"> Vent Fan On &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Room Temperature: <input type="number" maxlength="4" size="1" name="roomTemp">°C</label>
+        
+        <label class="task"><input type="checkbox" name="frontDoorOpen"> Front Door Open Above 5°C</label>
+        <label class="task"><input type="checkbox" name="backDoorOpen"> Back Door Open Above 5°C</label>
+        
+        <div class="section-title">Other Tasks</div>
+        <label class="task"><input type="checkbox" name="freezerDoorsOff"> Freezer Doors Off</label>
+        <label class="task"><input type="checkbox" name="freezerLightsOff"> Freezer Lights Off</label>
+        <label class="task"><input type="checkbox" name="fuelOffLocked"> Fuel Off and Locked</label>
+        <label class="task"><input type="checkbox" name="equipmentKeys"> Take Equipment Keys</label>
+        
+        <label>Comments:</label>
+        <textarea name="comments"></textarea>
+        
+        <label>Completed By:</label>
+        <input type="text" name="completedBy">
+        
+        <label>Finish Time:</label>
+        <input type="time" name="finishTime">
+        
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+
+    <!-- EmailJS CDN -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your User ID
+        (function() {
+            emailjs.init("Abab4K3AfJReuG2Up");
+        })();
+        
+        document.getElementById('checklistForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get all form data
+            const formData = new FormData(this);
+            
+            // Create email body with all form data
+            let emailBody = "Daily Checklist Submission\n\n";
+            
+            // Add date and time on separate lines
+            const startDateTime = document.getElementById('startDateTime').value;
+            if (startDateTime) {
+                // Split the datetime-local value which is in format YYYY-MM-DDThh:mm
+                const datePart = startDateTime.split('T')[0];
+                const timePart = startDateTime.split('T')[1];
+                
+                // Format date part if needed
+                const dateObj = new Date(datePart);
+                const formattedDate = dateObj.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                emailBody += "Start Date: " + formattedDate + "\n";
+                emailBody += "Start Time: " + timePart + "\n\n";
+            } else {
+                emailBody += "Start Date & Time: Not specified\n\n";
+            }
+            
+            // Process sections and their data
+            emailBody += "Forklift Charge:\n";
+            emailBody += "- Toyota: " + (formData.get('toyota') ? "Checked" : "Not Checked") + "\n";
+            emailBody += "- Hyster: " + (formData.get('hyster') ? "Checked" : "Not Checked") + "\n\n";
+            
+            emailBody += "Store Freezers Checked: " + (formData.get('storeFreezer') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Grinding Room:\n";
+            emailBody += "- Temperature #1: " + formData.get('temp-1') + " °C\n";
+            emailBody += "- Temperature #2: " + formData.get('temp-2') + " °C\n";
+            emailBody += "- Lights Off: " + (formData.get('grindingLightsOff') ? "Yes" : "No") + "\n";
+            emailBody += "- Doors Locked: " + (formData.get('grindingLockDoors') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Behind Grinding Room:\n";
+            emailBody += "- Compressor #1 ON: " + (formData.get('compressor1') ? "Yes" : "No") + "\n";
+            emailBody += "- Compressor #2 ON: " + (formData.get('compressor2') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Utility Room #1:\n";
+            emailBody += "- Water Pressure: " + formData.get('waterPressure') + " PSI\n";
+            emailBody += "- Compressor #3 On: " + (formData.get('compressor3') ? "Yes" : "No") + " - Temperature: " + formData.get('temp3') + " °C\n";
+            emailBody += "- Compressor #4 On: " + (formData.get('compressor4') ? "Yes" : "No") + " - Temperature: " + formData.get('temp4') + " °C\n";
+            emailBody += "- Lights Off: " + (formData.get('utilityLightsOff') ? "Yes" : "No") + "\n";
+            emailBody += "- Door Locked: " + (formData.get('utilityLockDoor') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Utility Room #2:\n";
+            emailBody += "- Driveway Door Locked: " + (formData.get('drivewayDoorLocked') ? "Yes" : "No") + "\n";
+            emailBody += "- Middle Door Closed below 5°C: " + (formData.get('middleDoorClosed') ? "Yes" : "No") + "\n";
+            emailBody += "- Back Door Locked: " + (formData.get('backDoorLocked') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Utility Room #3:\n";
+            emailBody += "- Compressor #5 On: " + (formData.get('compressor5') ? "Yes" : "No") + " - Temperature: " + formData.get('temp5') + " °C\n";
+            emailBody += "- Compressor #6 On: " + (formData.get('compressor6') ? "Yes" : "No") + " - Temperature: " + formData.get('temp6') + " °C\n";
+            emailBody += "- Compressor #7 On: " + (formData.get('compressor7') ? "Yes" : "No") + " - Temperature: " + formData.get('temp7') + " °C\n";
+            emailBody += "- Vent Fan On: " + (formData.get('ventFanOn') ? "Yes" : "No") + " - Room Temperature: " + formData.get('roomTemp') + " °C\n";
+            emailBody += "- Front Door Open Above 5°C: " + (formData.get('frontDoorOpen') ? "Yes" : "No") + "\n";
+            emailBody += "- Back Door Open Above 5°C: " + (formData.get('backDoorOpen') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Other Tasks:\n";
+            emailBody += "- Freezer Doors Off: " + (formData.get('freezerDoorsOff') ? "Yes" : "No") + "\n";
+            emailBody += "- Freezer Lights Off: " + (formData.get('freezerLightsOff') ? "Yes" : "No") + "\n";
+            emailBody += "- Fuel Off and Locked: " + (formData.get('fuelOffLocked') ? "Yes" : "No") + "\n";
+            emailBody += "- Equipment Keys Taken: " + (formData.get('equipmentKeys') ? "Yes" : "No") + "\n\n";
+            
+            emailBody += "Comments:\n" + formData.get('comments') + "\n\n";
+            emailBody += "Completed By: " + formData.get('completedBy') + "\n";
+            emailBody += "Finish Time: " + formData.get('finishTime');
+            
+            // Display loading message
+            document.querySelector('.submit-button').textContent = 'Sending...';
+            document.querySelector('.submit-button').disabled = true;
+            
+            // Format the date as MMM-DD
+            const today = new Date();
+            const month = today.toLocaleString('en-US', { month: 'short' });
+            const day = String(today.getDate()).padStart(2, '0');
+            const formattedDate = `${month}-${day}`;
+            
+            // Prepare template parameters
+            const templateParams = {
+                from_name: formData.get('completedBy') || 'Staff Member',
+                to_email: 'info@rawdogfeed.com',
+                from_email: 'rawdogfeed2@gmail.com',
+                subject: 'Daily Checklist Submission - ' + formattedDate,
+                message: emailBody
+            };
+            
+            // Send email using EmailJS
+            emailjs.send('service_7uc1j5b', 'template_uj61uk4', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    document.querySelector('.submit-button').textContent = 'Submitted!';
+                    alert('Checklist submitted successfully!');
+                    // Reset the entire form
+                    document.getElementById('checklistForm').reset();
+                    // Re-enable the submit button and reset its text after a short delay
+                    setTimeout(function() {
+                        document.querySelector('.submit-button').textContent = 'Submit';
+                        document.querySelector('.submit-button').disabled = false;
+                    }, 2000);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    document.querySelector('.submit-button').textContent = 'Submit';
+                    document.querySelector('.submit-button').disabled = false;
+                    alert('Failed to send email. Error: ' + JSON.stringify(error));
+                });
+        });
+    </script>
+</body>
+</html>
